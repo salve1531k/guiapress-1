@@ -4,19 +4,19 @@ const Category = require("../categories/Category");
 const Article = require("./Articles");
 const slugify = require("slugify");
 
-// Listar todos os artigos
+// Listar todos os imóveis
 router.get("/admin/articles", (req, res) => {
     Article.findAll({
         include: [{ model: Category }]
     }).then(articles => {
         res.render("admin/articles/index", { articles });
     }).catch(err => {
-        console.error("Erro ao buscar artigos:", err);
+        console.error("Erro ao buscar imóveis:", err);
         res.redirect("/");
     });
 });
 
-// Formulário para criar novo artigo
+// Formulário para criar novo imóvel
 router.get("/admin/articles/new", (req, res) => {
     Category.findAll().then(categories => {
         res.render("admin/articles/new", { categories });
@@ -26,46 +26,50 @@ router.get("/admin/articles/new", (req, res) => {
     });
 });
 
-// Salvar ou atualizar artigo
+// Salvar ou atualizar imóvel
 router.post("/articles/save", (req, res) => {
-    const { id, title, body, category } = req.body;
+    const { id, title, body, category, photo } = req.body;
 
     if (!title || !body || !category) {
         return res.redirect("/admin/articles");
     }
 
     if (id) {
-        // Atualizar artigo existente
-        Article.update({
+        // Atualizar imóvel existente
+        let updateData = {
             title: title,
             slug: slugify(title),
             body: body,
-            categoryId: category
-        }, {
+            categoryId: category,
+            photo: photo
+        };
+
+        Article.update(updateData, {
             where: { id: id }
         }).then(() => {
             res.redirect("/admin/articles");
         }).catch(err => {
-            console.error("Erro ao atualizar artigo:", err);
+            console.error("Erro ao atualizar imóvel:", err);
             res.redirect("/admin/articles");
         });
     } else {
-        // Criar novo artigo
+        // Criar novo imóvel
         Article.create({
             title: title,
             slug: slugify(title),
             body: body,
-            categoryId: category
+            categoryId: category,
+            photo: photo
         }).then(() => {
             res.redirect("/admin/articles");
         }).catch(err => {
-            console.error("Erro ao salvar artigo:", err);
+            console.error("Erro ao salvar imóvel:", err);
             res.redirect("/admin/articles/new");
         });
     }
 });
 
-// Deletar artigo
+// Deletar imóvel
 router.post("/articles/delete", (req, res) => {
     const id = req.body.id;
 
@@ -73,10 +77,10 @@ router.post("/articles/delete", (req, res) => {
         Article.destroy({
             where: { id: id }
         }).then(() => {
-            console.log("Artigo deletado, ID:", id);
+            console.log("Imóvel deletado, ID:", id);
             res.redirect("/admin/articles");
         }).catch(err => {
-            console.error("Erro ao deletar artigo:", err);
+            console.error("Erro ao deletar imóvel:", err);
             res.redirect("/admin/articles");
         });
     } else {
@@ -84,7 +88,7 @@ router.post("/articles/delete", (req, res) => {
     }
 });
 
-// Editar artigo
+// Editar imóvel
 router.get("/admin/articles/edit/:id", (req, res) => {
     const id = req.params.id;
 
@@ -103,7 +107,7 @@ router.get("/admin/articles/edit/:id", (req, res) => {
             res.redirect("/admin/articles");
         }
     }).catch(err => {
-        console.error("Erro ao buscar artigo:", err);
+        console.error("Erro ao buscar imóvel:", err);
         res.redirect("/admin/articles");
     });
 });

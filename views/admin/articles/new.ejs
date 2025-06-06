@@ -5,12 +5,12 @@
     <hr>
     <div class="card">
         <div class="card-header">
-            <h2>Novo Artigo</h2>
+            <h2>Novo Imóvel</h2>
         </div>
         <div class="card-body">
             <form method="POST" action="/articles/save">
-                <input class="form-control" type="text" name="title" placeholder="Título do artigo"><br>
-                <textarea class="form-control" name="body" id="article" placeholder="Escreva o conteúdo aqui!"></textarea><br>
+                <input class="form-control" type="text" name="title" placeholder="Título do imóvel"><br>
+                <textarea class="form-control" name="body" id="article" placeholder="Descrição do imóvel"></textarea><br>
                 
                 <label>Categoria</label>
                 <select name="category" class="form-control">
@@ -18,6 +18,15 @@
                         <option value="<%= category.id %>"><%= category.title %></option>
                     <% }) %>
                 </select><br>
+
+                <label>URL da imagem do imóvel</label>
+                <input class="form-control" type="text" name="photo" placeholder="Cole aqui a URL da imagem (ex: https://...jpg)"><br>
+
+                <!-- Preview da imagem -->
+                <div id="preview-container" style="display:none; margin-bottom: 15px;">
+                    <label>Pré-visualização da imagem:</label><br>
+                    <img id="preview-img" src="" alt="Pré-visualização" style="max-width:200px;max-height:150px;">
+                </div>
 
                 <button class="btn btn-success">Cadastrar</button>
             </form>
@@ -35,5 +44,24 @@
         plugins: [
             'advlist, autolink, link, image, lists, print, preview, hr, searchreplace, wordcount, fullscreen, insertdatetime, media, save, table, paste, emoticons'
         ]
+    });
+
+    // Preview da imagem ao digitar a URL
+    document.addEventListener('DOMContentLoaded', function() {
+        var photoInput = document.querySelector('input[name="photo"]');
+        var previewContainer = document.getElementById('preview-container');
+        var previewImg = document.getElementById('preview-img');
+        if(photoInput) {
+            photoInput.addEventListener('input', function() {
+                var url = photoInput.value.trim();
+                if(url.length > 5) {
+                    previewImg.src = url;
+                    previewContainer.style.display = 'block';
+                } else {
+                    previewContainer.style.display = 'none';
+                    previewImg.src = '';
+                }
+            });
+        }
     });
 </script>

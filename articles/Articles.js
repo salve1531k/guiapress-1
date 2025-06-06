@@ -18,12 +18,16 @@ const Article = connection.define("articles", {
     categoryId: {
         type: Sequelize.INTEGER,
         allowNull: false
+    },
+    photo: {
+        type: Sequelize.STRING,
+        allowNull: true
     }
 });
 
 Category.hasMany(Article);       
 Article.belongsTo(Category);     
 
-
+Article.sync({force: false}) 
 
 module.exports = Article;

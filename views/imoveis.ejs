@@ -1,0 +1,27 @@
+<%- include ("partials/header.ejs") %>
+<%- include ("partials/navbar.ejs") %>
+
+<body>
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="display-4">Imóveis disponíveis</h1>
+            <p class="lead">Veja todos os imóveis cadastrados em nossa imobiliária.</p>
+        </div>
+        <% articles.forEach(function(article) { %>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h2>
+                        <%= article.title %>
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <% if(article.photo) { %>
+                        <img src="<%= article.photo %>" alt="Foto do imóvel" style="max-width:200px;max-height:150px;" class="mb-3">
+                    <% } %>
+                    <a href="/<%= article.slug %>" class="btn btn-success">Ver detalhes</a>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+    <%- include ("partials/footer.ejs") %>
+</body>

@@ -1,0 +1,47 @@
+<%- include ("../partials/header.ejs") %>
+<%- include ("../partials/navbar.ejs") %>
+
+<body>
+    <div class="container mt-5">
+        <div class="jumbotron">
+            <h1 class="display-4">Painel Administrativo</h1>
+            <p class="lead">Gerencie os cadastros de imóveis e categorias da sua imobiliária.</p>
+            <hr class="my-4">
+
+            <!-- Bloco de atalhos rápidos -->
+            <div class="row mb-4">
+                <div class="col-md-4 mb-2">
+                    <a href="/admin/painel" class="btn btn-outline-secondary btn-block">Painel de Cadastro</a>
+                </div>
+                <div class="col-md-4 mb-2">
+                    <a href="/admin/articles" class="btn btn-outline-primary btn-block">Imóveis</a>
+                </div>
+                <div class="col-md-4 mb-2">
+                    <a href="/admin/categories" class="btn btn-outline-success btn-block">Categorias</a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h3>Imóveis</h3>
+                            <a href="/admin/articles/new" class="btn btn-success btn-block mb-2">Cadastrar Novo Imóvel</a>
+                            <a href="/admin/articles" class="btn btn-primary btn-block">Listar Imóveis</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h3>Categorias</h3>
+                            <a href="/admin/categories/new" class="btn btn-success btn-block mb-2">Cadastrar Nova Categoria</a>
+                            <a href="/admin/categories" class="btn btn-primary btn-block">Listar Categorias</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include ("../partials/footer.ejs") %>
+</body>
