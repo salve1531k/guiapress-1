@@ -52,14 +52,8 @@ app.use((req, res, next) => {
 connection
     .authenticate()
     .then(() => {
-        console.log('Conexão feita com sucesso');
-        // Sincroniza os models e cria as tabelas se não existirem
-        return connection.sync();
-    })
-    .then(() => {
-        console.log('Tabelas sincronizadas');
-    })
-    .catch(error => {
+        console.log('conexão feita com sucesso');
+    }).catch((error) => {
         console.log(error);
     });
 
@@ -68,45 +62,13 @@ app.use("/", categoriesController);
 app.use("/", articlesController);
 app.use("/", usersController);
 
-// Testes de sessão
-app.get("/session", (req, res) => {
-    req.session.treinamento = "Formação Node.js";
-    req.session.ano = 2025;
-    req.session.email = "user@user.com";
-    req.session.user = {
-        username: "user",
-        email: "user@user.com",
-        id: 10
-    };
-    res.send("Sessão Gerada");
-});
-
-app.get("/leitura", (req, res) => {
-    res.json({
-        treinamento: req.session.treinamento,
-        ano: req.session.ano,
-        email: req.session.email,
-        user: req.session.user
-    });
-});
-
-// Rotas
-app.get("/", (req, res) => {
+app.get("/", (req,res) => {
     Article.findAll({
         order: [['id', 'DESC']]
     }).then(articles => {
-        res.render("index", { articles });
-    });
-});
-
-// Adicione esta rota para funcionar o menu e botão "Imóveis"
-app.get("/imoveis", (req, res) => {
-    Article.findAll({
-        order: [['id', 'DESC']]
-    }).then(articles => {
-        res.render("imoveis", { articles });
-    });
-});
+        res.render("index", {articles: articles});
+    })
+})
 
 app.get("/:slug", (req, res) => {
     const slug = req.params.slug;
@@ -137,14 +99,7 @@ app.get("/category/:slug", (req, res) => {
     }).catch(err => {
         res.redirect("/");
     });
-});
-
-// Painel administrativo
-app.get("/admin/painel", (req, res) => {
-    res.render("admin/painel");
-});
-
-// Iniciar servidor
+})
 app.listen(4000, () => {
     console.log("O servidor está rodando na porta 4000");
 });
