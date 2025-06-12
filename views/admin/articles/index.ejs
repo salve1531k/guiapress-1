@@ -4,11 +4,11 @@
 <div class="container mt-4">
     <h2 class="text-center">Lista de Imóveis</h2>
     <div class="d-flex justify-content-center">
-        <a href="/admin/articles/new" class="btn mb-3" style="background-color:#a0522d; color:#fff; font-weight:bold;">Novo Imóvel</a>
+        <a href="/admin/articles/new" class="btn mb-3" style="background-color:#2d20a7; color:#fff; font-weight:bold;">Novo Imóvel</a>
     </div>
     <div class="table-responsive">
-        <table class="table table-bordered text-center align-middle">
-            <thead>
+        <table class="table table-bordered text-center align-middle" style="background:#fff;">
+            <thead style="background:#1b199c;color:#fff;">
                 <tr>
                     <th>Id</th>
                     <th>Foto</th>
@@ -34,7 +34,7 @@
                              <a href="/admin/articles/edit/<%= article.id %>" class="btn btn-warning btn-sm">Editar</a>
                              <form method="POST" action="/articles/delete" style="display:inline;" onsubmit="confirmarDelecao(event, this)">
                                  <input type="hidden" name="id" value="<%= article.id %>">
-                                 <button class="btn btn-danger">Deletar</button>
+                                 <button class="btn btn-danger btn-sm">Deletar</button>
                              </form>
                         </td>
                     </tr>

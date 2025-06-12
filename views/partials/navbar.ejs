@@ -1,29 +1,67 @@
-<nav class="navbar navbar-expand-lg" style="background-color: #a0522d;">
-    <a class="navbar-brand text-white" href="/">
-        Imobiliária
-    </a>
-    <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-            <a class="nav-link text-white" href="/admin/categories">Categorias</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-white" href="/admin/articles">Imóveis</a>
-        </li>
-    </ul>
-    <ul class="navbar-nav ml-auto">
-        <% if (!user) { %>
-            <li class="nav-item">
-                <a class="nav-link text-white" href="/login">Login</a>
-            </li>
-        <% } else { %>
-            <li class="nav-item">
-                <span class="navbar-text mr-2 text-white">
-                    <strong><%= user.email %></strong>
-                </span>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white" href="/logout">Logout</a>
-            </li>
-        <% } %>
-    </ul>
+<nav class="navbar navbar-expand-lg shadow-sm" style="background-color: #5900ff;">
+    <div class="container">
+        <a class="navbar-brand text-white" href="/" style="font-size:1.5rem;">
+            Imobiliária
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="categoriasDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Categorias
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="categoriasDropdown">
+                        <% if (categories && categories.length > 0) { %>
+                            <% categories.forEach(function(category) { %>
+                                <li>
+                                    <a class="dropdown-item" href="/category/<%= category.slug %>"><%= category.title %></a>
+                                </li>
+                            <% }) %>
+                        <% } else { %>
+                            <li><span class="dropdown-item text-muted">Nenhuma categoria</span></li>
+                        <% } %>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="/admin/categories">Gerenciar Categorias</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="/admin/articles">Imóveis</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                <% if (!user) { %>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/login">Login</a>
+                    </li>
+                <% } else { %>
+                    <li class="nav-item">
+                        <span class="navbar-text me-2 text-white">
+                            <strong><%= user.email %></strong>
+                        </span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/logout">Logout</a>
+                    </li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
 </nav>
+<style>
+    .navbar-nav .nav-link {
+        margin-right: 10px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+    }
+    .dropdown-menu {
+        min-width: 180px;
+    }
+    .dropdown-item:hover, .dropdown-item:focus {
+        background: #f0f0ff;
+        color: #5900ff;
+        font-weight: bold;
+    }
+</style>

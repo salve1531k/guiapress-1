@@ -64,27 +64,14 @@ app.use("/", usersController);
 
 app.get("/", (req,res) => {
     Article.findAll({
-        order: [['id', 'DESC']]
+        order: [['id', 'DESC']],
+        include: [{ model: Category }]
     }).then(articles => {
         res.render("index", {articles: articles});
     })
 })
 
-app.get("/:slug", (req, res) => {
-    const slug = req.params.slug;
-    Article.findOne({
-        where: { slug }
-    }).then(article => {
-        if (article) {
-            res.render("article", { article });
-        } else {
-            res.redirect("/");
-        }
-    }).catch(err => {
-        res.redirect("/");
-    });
-});
-
+// Filtro por categoria
 app.get("/category/:slug", (req, res) => {
     const slug = req.params.slug;
     Category.findOne({
@@ -92,7 +79,9 @@ app.get("/category/:slug", (req, res) => {
         include: [{ model: Article }]
     }).then(category => {
         if (category) {
-            res.render("index", { articles: category.articles });
+            // Ordena os artigos por id desc
+            const articles = (category.articles || []).sort((a, b) => b.id - a.id);
+            res.render("index", { articles });
         } else {
             res.redirect("/");
         }
