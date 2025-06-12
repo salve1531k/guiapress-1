@@ -2,13 +2,28 @@
     <a class="navbar-brand text-white" href="/">
         Imobiliária
     </a>
-
     <ul class="navbar-nav mr-auto">
         <li class="nav-item">
             <a class="nav-link text-white" href="/admin/categories">Categorias</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-white" href="/admin/articles">Artigos</a>
+            <a class="nav-link text-white" href="/admin/articles">Imóveis</a>
         </li>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+        <% if (!user) { %>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="/login">Login</a>
+            </li>
+        <% } else { %>
+            <li class="nav-item">
+                <span class="navbar-text mr-2 text-white">
+                    <strong><%= user.email %></strong>
+                </span>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="/logout">Logout</a>
+            </li>
+        <% } %>
     </ul>
 </nav>

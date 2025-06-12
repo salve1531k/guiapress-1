@@ -100,6 +100,12 @@ app.get("/category/:slug", (req, res) => {
         res.redirect("/");
     });
 })
+
+// Página de login
+app.get("/login", (req, res) => {
+    res.render("login");
+});
+
 app.listen(4000, () => {
     console.log("O servidor está rodando na porta 4000");
 });
